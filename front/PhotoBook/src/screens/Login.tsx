@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Button, Input} from 'react-native-elements';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
@@ -11,6 +11,8 @@ import {
 const Login = ({navigation}: any) => {
   const authentication = useAppSelector(selectAuthentication);
   const dispatch = useAppDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (authentication.user) {
@@ -35,13 +37,16 @@ const Login = ({navigation}: any) => {
           autoCompleteType={undefined}
           secureTextEntry={true}
         />
+
         <Button
+          loading={isLoading}
           containerStyle={styles.button}
           title="Connexion"
           onPress={() => {
             console.log('about to connect');
             (async () => {
               try {
+                setIsLoading(true);
                 const response = await fetch(
                   'http://10.0.2.2:3000/api/connect',
                   {
@@ -104,6 +109,13 @@ const styles = StyleSheet.create({
   button: {
     margin: 20,
     alignSelf: 'stretch',
+  },
+  isLoading: {
+    justifyContent: 'center',
+    margin: 20,
+    height: 38,
+    alignSelf: 'stretch',
+    backgroundColor: 'hsl(0, 0%, 80%)',
   },
 });
 

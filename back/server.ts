@@ -21,6 +21,12 @@ app.use(
 );
 app.use(express.json());
 
+app.use((req, res, next) => {
+  setTimeout(() => {
+    next();
+  }, 2000);
+});
+
 app.get("/api/isConnected", (req, res) => {
   if (req.session.user) {
     res.json(req.session.user);
