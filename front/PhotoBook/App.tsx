@@ -27,13 +27,22 @@ const App = () => {
     <SafeAreaView style={[styles.safeAreaView, backgroundStyle]}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={isConnected ? 'Home' : 'Login'}>
+        <Stack.Navigator
+          initialRouteName={isConnected ? 'Home' : 'Login'}
+          screenOptions={{
+            headerShown: false,
+          }}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen
             name="Legal"
             component={Legal}
-            options={{title: 'Mentions Légales'}}
+            options={{
+              title: 'Mentions Légales',
+              headerStyle: {
+                backgroundColor: 'hsl(30, 100%, 50%)',
+              },
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
