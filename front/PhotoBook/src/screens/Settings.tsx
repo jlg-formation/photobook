@@ -1,11 +1,17 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
 
-const Wall = () => {
-  const name = 'Wall';
+const Settings = () => {
+  const name = 'Settings';
   return (
     <View style={styles.view}>
       <Text style={styles.text}>{name} works !</Text>
+      <Button
+        title="Disconnect"
+        onPress={() => {
+          console.log('disconnect');
+        }}
+      />
     </View>
   );
 };
@@ -22,4 +28,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Wall;
+export default Settings;

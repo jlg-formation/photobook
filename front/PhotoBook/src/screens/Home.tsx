@@ -1,29 +1,22 @@
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import Legal from './Legal';
+import Settings from './Settings';
+import Wall from './Wall';
 
-const Home = ({navigation}: any) => {
-  const name = 'Home';
+const Tab = createBottomTabNavigator();
+
+const Home = () => {
   return (
-    <View style={styles.view}>
-      <Text style={styles.text}>{name} works !</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Legal')}
-      />
-    </View>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Tab.Screen name="Wall" component={Wall} />
+      <Tab.Screen name="Legal" component={Legal} />
+      <Tab.Screen name="Settings" component={Settings} />
+    </Tab.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-  text: {
-    fontFamily: 'sans-serif',
-    fontStyle: 'italic',
-  },
-});
 
 export default Home;

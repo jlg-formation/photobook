@@ -21,7 +21,7 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const isConnected = true;
+  const isConnected = false;
 
   return (
     <SafeAreaView style={[styles.safeAreaView, backgroundStyle]}>
