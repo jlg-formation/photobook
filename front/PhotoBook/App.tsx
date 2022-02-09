@@ -1,3 +1,5 @@
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {
   SafeAreaView,
@@ -7,6 +9,9 @@ import {
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Home from './src/screens/Home';
+import Legal from './src/screens/Legal';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -18,8 +23,16 @@ const App = () => {
   return (
     <SafeAreaView style={[styles.safeAreaView, backgroundStyle]}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-
-      <Home />
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen
+            name="Legal"
+            component={Legal}
+            options={{title: 'Mentions Légales'}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   );
 };

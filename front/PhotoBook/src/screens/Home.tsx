@@ -1,11 +1,15 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
 
-const Home = () => {
+const Home = ({navigation}: any) => {
   const name = 'Home';
   return (
     <View style={styles.view}>
       <Text style={styles.text}>{name} works !</Text>
+      <Button
+        title="Go to Details"
+        onPress={() => navigation.navigate('Legal')}
+      />
     </View>
   );
 };
@@ -14,7 +18,7 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
   text: {
     fontFamily: 'sans-serif',
