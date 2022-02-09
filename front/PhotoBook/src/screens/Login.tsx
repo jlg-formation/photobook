@@ -13,6 +13,7 @@ const Login = ({navigation}: any) => {
   const dispatch = useAppDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (authentication.user) {
@@ -38,6 +39,8 @@ const Login = ({navigation}: any) => {
           secureTextEntry={true}
         />
 
+        <Text style={styles.error}>{error} </Text>
+
         <Button
           loading={isLoading}
           containerStyle={styles.button}
@@ -58,18 +61,20 @@ const Login = ({navigation}: any) => {
                   },
                 );
                 if (response.status === 401) {
+                  setError('Bad email/password');
                   throw new Error('bad credentials');
                 }
                 if (response.status >= 400) {
-                  console.log('response: ', response);
+                  setError('Technical issue');
                   throw new Error('technical error');
                 }
                 console.log('response: ', response);
                 const user: User = await response.json();
                 console.log('user: ', user);
                 dispatch(connect(user));
-              } catch (error) {
-                console.error('error: ', error);
+              } catch (err) {
+              } finally {
+                setIsLoading(false);
               }
             })();
           }}
@@ -116,6 +121,11 @@ const styles = StyleSheet.create({
     height: 38,
     alignSelf: 'stretch',
     backgroundColor: 'hsl(0, 0%, 80%)',
+  },
+  error: {
+    color: 'red',
+    fontWeight: 'bold',
+    fontSize: 20,
   },
 });
 

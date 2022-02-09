@@ -14,7 +14,18 @@ const Settings = ({navigation}: any) => {
         title="Disconnect"
         onPress={() => {
           console.log('disconnect');
-          dispatch(disconnect());
+          (async () => {
+            try {
+              const response = await fetch(
+                'http://10.0.2.2:3000/api/disconnect',
+                {
+                  method: 'POST',
+                },
+              );
+              console.log('response: ', response);
+            } catch (err) {}
+          })();
+          dispatch(disconnect(undefined));
           navigation.navigate('Login');
         }}
       />

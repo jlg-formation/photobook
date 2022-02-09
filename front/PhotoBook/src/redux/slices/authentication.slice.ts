@@ -18,11 +18,11 @@ export const authenticationSlice = createSlice<
     user: undefined,
   },
   reducers: {
-    connect: (state, action: PayloadAction<User>) => {
+    connect(state: AuthenticationState, action: PayloadAction<User>) {
       console.log('action: ', action);
       state.user = action.payload;
     },
-    disconnect: state => {
+    disconnect(state: AuthenticationState) {
       state.user = undefined;
     },
   },
