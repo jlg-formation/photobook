@@ -39,7 +39,31 @@ const Login = ({navigation}: any) => {
           title="Connexion"
           onPress={() => {
             console.log('about to connect');
-            dispatch(connect());
+            (async () => {
+              try {
+                const response = await fetch(
+                  'http://10.0.2.2:3000/api/connect',
+                  {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({email: 'jlg@jlg.com'}),
+                  },
+                );
+                if (response.status === 401) {
+                  throw new Error('bad credentials');
+                }
+                if (response.status >= 400) {
+                  console.log('response: ', response);
+                  throw new Error('technical error');
+                }
+                console.log('response: ', response);
+                dispatch(connect());
+              } catch (error) {
+                console.error('error: ', error);
+              }
+            })();
           }}
         />
       </View>
