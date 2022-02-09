@@ -41,7 +41,7 @@ const ReduxApp = () => {
           <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
           <NavigationContainer>
             <Stack.Navigator
-              initialRouteName={authentication.isConnected ? 'Home' : 'Login'}
+              initialRouteName={authentication.user ? 'Home' : 'Login'}
               screenOptions={{
                 headerShown: false,
               }}>

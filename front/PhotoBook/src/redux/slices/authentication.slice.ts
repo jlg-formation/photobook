@@ -1,17 +1,29 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction, SliceCaseReducers} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 
-export const authenticationSlice = createSlice({
+export interface User {
+  displayName: string;
+}
+
+export interface AuthenticationState {
+  user: User | undefined;
+}
+
+export const authenticationSlice = createSlice<
+  AuthenticationState,
+  SliceCaseReducers<AuthenticationState>
+>({
   name: 'authentication',
   initialState: {
-    isConnected: false,
+    user: undefined,
   },
   reducers: {
-    connect: state => {
-      state.isConnected = true;
+    connect: (state, action: PayloadAction<User>) => {
+      console.log('action: ', action);
+      state.user = action.payload;
     },
     disconnect: state => {
-      state.isConnected = false;
+      state.user = undefined;
     },
   },
 });

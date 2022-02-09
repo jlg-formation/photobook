@@ -5,6 +5,7 @@ import {useAppDispatch, useAppSelector} from '../redux/hooks';
 import {
   connect,
   selectAuthentication,
+  User,
 } from '../redux/slices/authentication.slice';
 
 const Login = ({navigation}: any) => {
@@ -12,7 +13,7 @@ const Login = ({navigation}: any) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (authentication.isConnected) {
+    if (authentication.user) {
       navigation.navigate('Home');
     }
   });
@@ -59,7 +60,9 @@ const Login = ({navigation}: any) => {
                   throw new Error('technical error');
                 }
                 console.log('response: ', response);
-                dispatch(connect());
+                const user: User = await response.json();
+                console.log('user: ', user);
+                dispatch(connect(user));
               } catch (error) {
                 console.error('error: ', error);
               }
