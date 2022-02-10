@@ -31,7 +31,7 @@ const Login = ({navigation}: ScreenProps<'Login'>) => {
 
   useEffect(() => {
     if (authentication.user) {
-      navigation.navigate('Home');
+      navigation.navigate('Wall');
     }
   });
 
