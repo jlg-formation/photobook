@@ -1,5 +1,6 @@
 import express from "express";
 import session from "express-session";
+import morgan from "morgan";
 
 declare module "express-session" {
   interface SessionData {
@@ -10,6 +11,8 @@ declare module "express-session" {
 const port = 3000;
 
 const app = express();
+
+app.use(morgan("tiny"));
 
 app.use(
   session({
