@@ -9,6 +9,7 @@ declare module "express-session" {
 }
 
 const port = 3000;
+const publicDir = "./public";
 
 const app = express();
 
@@ -24,7 +25,7 @@ app.use(
 );
 app.use(express.json());
 
-app.use((req, res, next) => {
+app.use("/api", (req, res, next) => {
   setTimeout(() => {
     next();
   }, 2000);
@@ -53,6 +54,8 @@ app.post("/api/disconnect", (req, res) => {
   req.session.user = undefined;
   res.status(200).end();
 });
+
+app.use(express.static(publicDir));
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);

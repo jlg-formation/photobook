@@ -1,4 +1,5 @@
-export const apiUrl = 'http://10.0.2.2:3000/api';
+export const domain = 'http://10.0.2.2:3000';
+export const apiUrl = `${domain}/api`;
 
 export class Api {
   async connect(email: string, password: string) {
