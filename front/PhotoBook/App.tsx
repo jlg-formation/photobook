@@ -1,6 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   SafeAreaView,
   StatusBar,
   StyleSheet,
@@ -12,6 +13,7 @@ import {ThemeProvider} from 'react-native-elements';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Provider} from 'react-redux';
+import {api} from './src/api';
 import {Stack} from './src/navigation';
 import {useAppDispatch, useAppSelector} from './src/redux/hooks';
 import {
@@ -45,15 +47,12 @@ const ReduxApp = () => {
   useEffect(() => {
     (async () => {
       try {
-        console.log('test if connected');
-        const response = await fetch('http://10.0.2.2:3000/api/isConnected');
-        console.log('response: ', response);
+        const response = await api.isConnected();
         if (response.status === 401) {
           dispatch(disconnect(undefined));
           return;
         }
         const user: User = await response.json();
-        console.log('user: ', user);
         dispatch(connect(user));
       } finally {
         setInitializing(false);
@@ -67,7 +66,8 @@ const ReduxApp = () => {
           <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
           {initializing ? (
             <View style={styles.initilizing}>
-              <Text>Initializing...</Text>
+              <Text style={styles.logo}>PhotoBook</Text>
+              <ActivityIndicator size="large" />
             </View>
           ) : (
             <NavigationContainer>
@@ -103,6 +103,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  logo: {
+    height: 100,
+    textAlign: 'center',
+    fontSize: 50,
+    fontWeight: 'bold',
   },
 });
 

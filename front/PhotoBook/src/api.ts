@@ -10,10 +10,15 @@ export class Api {
       body: JSON.stringify({email, password}),
     });
   }
+
   async disconnect() {
     return await fetch(apiUrl + '/disconnect', {
       method: 'POST',
     });
+  }
+
+  async isConnected() {
+    return await fetch(apiUrl + '/isConnected');
   }
 }
 
