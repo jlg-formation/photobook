@@ -10,6 +10,8 @@ const NewPost = () => {
   return (
     <View style={styles.view}>
       <TextInput
+        multiline
+        numberOfLines={5}
         style={styles.input}
         onChangeText={onChangeText}
         value={text}
@@ -22,15 +24,21 @@ const NewPost = () => {
 
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: 'white',
+    backgroundColor: 'gray',
     width: '95%',
 
     margin: 10,
   },
   input: {
-    height: 200,
+    paddingTop: 0,
+    paddingBottom: 0,
+    textAlignVertical: 'top',
+    backgroundColor: 'white',
+    padding: 10,
     fontFamily: 'sans-serif',
     fontStyle: 'italic',
+    borderBottomColor: '#000000',
+    borderWidth: 1,
   },
 });
 
