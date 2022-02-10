@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
+import {api} from '../api';
 import {useAppDispatch} from '../redux/hooks';
 import {disconnect} from '../redux/slices/authentication.slice';
 
@@ -13,15 +14,9 @@ const Settings = ({navigation}: any) => {
       <Button
         title="Disconnect"
         onPress={() => {
-          console.log('disconnect');
           (async () => {
             try {
-              const response = await fetch(
-                'http://10.0.2.2:3000/api/disconnect',
-                {
-                  method: 'POST',
-                },
-              );
+              const response = await api.disconnect();
               console.log('response: ', response);
             } catch (err) {}
           })();

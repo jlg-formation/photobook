@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
+import {Controller, useForm} from 'react-hook-form';
 import {StyleSheet, Text, View} from 'react-native';
 import {Button, Input} from 'react-native-elements';
+import {api} from '../api';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
 import {
   connect,
@@ -15,10 +17,48 @@ const Login = ({navigation}: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm({
+    defaultValues: {
+      email: 'jlg@jlg.com',
+      password: 'xxx',
+    },
+  });
+
   useEffect(() => {
     if (authentication.user) {
       navigation.navigate('Home');
     }
+  });
+
+  const onSubmit = handleSubmit(data => {
+    console.log('data: ', data);
+    (async () => {
+      try {
+        setIsLoading(true);
+        const response = await api.connect(data.email, data.password);
+        setIsLoading(false);
+        if (response.status === 401) {
+          throw new Error('Bad email/password');
+        }
+        if (response.status >= 400) {
+          throw new Error('Technical issue');
+        }
+        try {
+          const user: User = await response.json();
+          dispatch(connect(user));
+        } catch (err) {
+          throw new Error('bad answer from back-end');
+        }
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        }
+      }
+    })();
   });
 
   return (
@@ -28,15 +68,46 @@ const Login = ({navigation}: any) => {
       </View>
       <View style={styles.form}>
         <Text style={styles.title}>Sign in</Text>
-        <Input
-          placeholder="Email"
-          autoCompleteType={undefined}
-          keyboardType="email-address"
+        <Controller
+          control={control}
+          rules={{
+            required: 'Email is required',
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: 'Entered value does not match email format',
+            },
+          }}
+          name="email"
+          render={({field: {onChange, onBlur, value}}) => (
+            <Input
+              placeholder="Email"
+              autoCompleteType={undefined}
+              keyboardType="email-address"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              errorMessage={errors.email ? errors.email.message : ''}
+            />
+          )}
         />
-        <Input
-          placeholder="Password"
-          autoCompleteType={undefined}
-          secureTextEntry={true}
+
+        <Controller
+          control={control}
+          rules={{
+            required: 'Password is required.',
+          }}
+          name="password"
+          render={({field: {onChange, onBlur, value}}) => (
+            <Input
+              placeholder="Password"
+              autoCompleteType={undefined}
+              secureTextEntry={true}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              errorMessage={errors.password ? errors.password.message : ''}
+            />
+          )}
         />
 
         <Text style={styles.error}>{error} </Text>
@@ -45,39 +116,7 @@ const Login = ({navigation}: any) => {
           loading={isLoading}
           containerStyle={styles.button}
           title="Connexion"
-          onPress={() => {
-            console.log('about to connect');
-            (async () => {
-              try {
-                setIsLoading(true);
-                const response = await fetch(
-                  'http://10.0.2.2:3000/api/connect',
-                  {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({email: 'jlg@jlg.com'}),
-                  },
-                );
-                if (response.status === 401) {
-                  setError('Bad email/password');
-                  throw new Error('bad credentials');
-                }
-                if (response.status >= 400) {
-                  setError('Technical issue');
-                  throw new Error('technical error');
-                }
-                console.log('response: ', response);
-                const user: User = await response.json();
-                console.log('user: ', user);
-                dispatch(connect(user));
-              } catch (err) {
-              } finally {
-                setIsLoading(false);
-              }
-            })();
-          }}
+          onPress={onSubmit}
         />
       </View>
     </View>
@@ -126,6 +165,10 @@ const styles = StyleSheet.create({
     color: 'red',
     fontWeight: 'bold',
     fontSize: 20,
+  },
+  fieldError: {
+    color: 'red',
+    alignSelf: 'stretch',
   },
 });
 
