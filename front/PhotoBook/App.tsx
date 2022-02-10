@@ -1,5 +1,4 @@
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
@@ -13,6 +12,7 @@ import {ThemeProvider} from 'react-native-elements';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Provider} from 'react-redux';
+import {Stack} from './src/navigation';
 import {useAppDispatch, useAppSelector} from './src/redux/hooks';
 import {
   connect,
@@ -24,8 +24,6 @@ import {store} from './src/redux/store';
 import Home from './src/screens/Home';
 import Legal from './src/screens/Legal';
 import Login from './src/screens/Login';
-
-const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (

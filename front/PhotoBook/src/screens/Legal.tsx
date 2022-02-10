@@ -1,7 +1,8 @@
 import React from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
+import {ScreenProps} from '../navigation';
 
-const Legal = ({navigation}: any) => {
+const Legal = ({navigation}: ScreenProps<'Legal'>) => {
   const name = 'Legal';
   return (
     <View style={styles.view}>

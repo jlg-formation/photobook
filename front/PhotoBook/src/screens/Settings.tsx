@@ -1,10 +1,11 @@
 import React from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import {api} from '../api';
+import {ScreenProps} from '../navigation';
 import {useAppDispatch} from '../redux/hooks';
 import {disconnect} from '../redux/slices/authentication.slice';
 
-const Settings = ({navigation}: any) => {
+const Settings = ({navigation}: ScreenProps<'Settings'>) => {
   const dispatch = useAppDispatch();
 
   const name = 'Settings';
@@ -16,8 +17,7 @@ const Settings = ({navigation}: any) => {
         onPress={() => {
           (async () => {
             try {
-              const response = await api.disconnect();
-              console.log('response: ', response);
+              await api.disconnect();
             } catch (err) {}
           })();
           dispatch(disconnect(undefined));
