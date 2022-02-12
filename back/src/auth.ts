@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 
 const app = Router();
 
@@ -25,5 +25,12 @@ app.post("/disconnect", (req, res) => {
   req.session.user = undefined;
   res.status(200).end();
 });
+
+export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
+  if (req.session.user === undefined) {
+    res.status(401).end();
+  }
+  next();
+};
 
 export const auth = app;
