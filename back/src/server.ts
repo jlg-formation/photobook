@@ -1,7 +1,9 @@
 import express from "express";
 import session from "express-session";
 import morgan from "morgan";
-import { auth } from "./auth";
+import { crudity } from "crudity";
+import { createServer } from "http";
+import { auth, checkAuth } from "./auth";
 
 declare module "express-session" {
   interface SessionData {
@@ -13,6 +15,7 @@ const port = 3000;
 const publicDir = "./public";
 
 const app = express();
+const server = createServer(app);
 
 app.use(morgan("tiny"));
 
@@ -32,6 +35,14 @@ app.use("/api", (req, res, next) => {
   }, 2000);
 });
 app.use("/api/auth", auth);
+
+app.use(
+  "/api/articles",
+  checkAuth,
+  crudity(server, "articles", {
+    pageSize: 100,
+  })
+);
 app.use(express.static(publicDir));
 
 app.listen(port, () => {
