@@ -18,6 +18,11 @@ export class Api {
     });
   }
 
+  async getArticles() {
+    const response = await fetch(apiUrl + '/articles');
+    return await response.json();
+  }
+
   async isConnected() {
     return await fetch(apiUrl + '/auth/isConnected');
   }
