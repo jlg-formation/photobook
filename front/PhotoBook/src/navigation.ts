@@ -4,11 +4,14 @@ import {
 } from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
-  Home: undefined;
-  Legal: undefined;
+  Home: {screen: keyof TabStackParamList};
   Login: undefined;
-  Settings: undefined;
+};
+
+export type TabStackParamList = {
   Wall: undefined;
+  Legal: undefined;
+  Settings: undefined;
 };
 
 export type ScreenProps<T extends keyof RootStackParamList> =
