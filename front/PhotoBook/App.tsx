@@ -24,7 +24,6 @@ import {
 } from './src/redux/slices/authentication.slice';
 import {store} from './src/redux/store';
 import Home from './src/screens/Home';
-import Legal from './src/screens/Legal';
 import Login from './src/screens/Login';
 
 const App = () => {
@@ -78,16 +77,6 @@ const ReduxApp = () => {
                 }}>
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen name="Login" component={Login} />
-                <Stack.Screen
-                  name="Legal"
-                  component={Legal}
-                  options={{
-                    title: 'Mentions Légales',
-                    headerStyle: {
-                      backgroundColor: 'hsl(30, 100%, 50%)',
-                    },
-                  }}
-                />
               </Stack.Navigator>
             </NavigationContainer>
           )}
