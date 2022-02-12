@@ -1,10 +1,9 @@
 {
   "name": "back",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Back-End for Photobook",
   "scripts": {
-    "start": "npx nodemon server.ts",
+    "start": "npx nodemon src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

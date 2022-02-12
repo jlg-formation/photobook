@@ -3,7 +3,7 @@ export const apiUrl = `${domain}/api`;
 
 export class Api {
   async connect(email: string, password: string) {
-    return await fetch(apiUrl + '/connect', {
+    return await fetch(apiUrl + '/auth/connect', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -13,13 +13,13 @@ export class Api {
   }
 
   async disconnect() {
-    return await fetch(apiUrl + '/disconnect', {
+    return await fetch(apiUrl + '/auth/disconnect', {
       method: 'POST',
     });
   }
 
   async isConnected() {
-    return await fetch(apiUrl + '/isConnected');
+    return await fetch(apiUrl + '/auth/isConnected');
   }
 }
 
