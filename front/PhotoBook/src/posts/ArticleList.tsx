@@ -7,7 +7,7 @@ import {
   selectArticleStatus,
 } from '../redux/slices/articles.slice';
 
-const PostList = () => {
+const ArticleList = () => {
   const dispatch = useDispatch();
   const articles = useSelector(selectAllArticles);
 
@@ -45,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostList;
+export default ArticleList;

@@ -3,7 +3,7 @@ import {Image, RefreshControl, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {domain} from '../api';
 import NewPost from '../posts/NewPost';
-import PostList from '../posts/PostList';
+import ArticleList from '../posts/ArticleList';
 import {
   fetchAllArticles,
   selectArticleStatus,
@@ -28,7 +28,7 @@ const Wall = () => {
         style={styles.userBackground}
       />
       <NewPost />
-      <PostList />
+      <ArticleList />
     </ScrollView>
   );
 };
