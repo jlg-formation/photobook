@@ -14,6 +14,9 @@ export class Api {
         'Content-Type': 'application/json',
       },
     });
+    if (response.status >= 400) {
+      throw new Error('cannot add an article. Error ' + response.status);
+    }
     return await response.json();
   }
 

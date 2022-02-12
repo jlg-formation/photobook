@@ -1,5 +1,11 @@
 import React, {useEffect} from 'react';
-import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
 import {
   fetchAllArticles,
@@ -23,8 +29,14 @@ const ArticleList = () => {
     <View style={styles.view}>
       {articleStatus === 'loading' ? (
         <ActivityIndicator size="large" />
+      ) : articles.length === 0 ? (
+        <Text style={styles.text}>No article found...</Text>
       ) : (
-        <Text style={styles.text}>{articles.length} articles found!</Text>
+        articles.map(article => (
+          <Text style={styles.item} key={article.id}>
+            {article.content}
+          </Text>
+        ))
       )}
     </View>
   );
@@ -43,6 +55,7 @@ const styles = StyleSheet.create({
     fontFamily: 'sans-serif',
     fontStyle: 'italic',
   },
+  item: {},
 });
 
 export default ArticleList;

@@ -41,17 +41,21 @@ export const articleSlice = createSlice<
       .addCase(fetchAllArticles.fulfilled, (state, action) => {
         state.status = 'succeeded';
         // Add any fetched posts to the array
-        state.items = state.items.concat(action.payload);
+        state.items = state.items = action.payload;
       })
       .addCase(fetchAllArticles.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(addNewArticle.fulfilled, (state, action) => {
+        console.log('addNewArticle fulfilled. action: ', action);
+        // We can directly add the new post object to our posts array
+        state.items.push(action.payload);
+      })
+      .addCase(addNewArticle.rejected, (state, action) => {
+        console.log('addNewArticle rejected. action: ', action);
+        state.error = action.error.message as string;
       });
-    builder.addCase(addNewArticle.fulfilled, (state, action) => {
-      console.log('addNewArticle fulfilled. action: ', action);
-      // We can directly add the new post object to our posts array
-      state.items.push(action.payload);
-    });
   },
 });
 
