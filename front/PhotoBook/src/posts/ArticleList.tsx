@@ -26,11 +26,15 @@ const ArticleList = () => {
       ) : articles.length === 0 ? (
         <Text style={styles.text}>No article found...</Text>
       ) : (
-        articles.map(article => (
-          <Text style={styles.item} key={article.id}>
-            {article.content}
-          </Text>
-        ))
+        articles.map(article => {
+          console.log('article: ', article);
+
+          return (
+            <Text style={styles.item} key={article.id}>
+              {article.content}
+            </Text>
+          );
+        })
       )}
     </View>
   );

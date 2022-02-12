@@ -41,7 +41,7 @@ export const articleSlice = createSlice<
       .addCase(fetchAllArticles.fulfilled, (state, action) => {
         state.status = 'succeeded';
         // Add any fetched posts to the array
-        state.items = state.items = action.payload;
+        state.items = action.payload;
       })
       .addCase(fetchAllArticles.rejected, (state, action) => {
         state.status = 'failed';

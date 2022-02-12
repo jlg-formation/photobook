@@ -16,10 +16,9 @@ const NewArticle = () => {
       setIsLoading(true);
       await dispatch(addNewArticle({content: text, images: []})).unwrap();
       setText('');
+      setIsLoading(false);
     } catch (err) {
       console.log('err: ', err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
