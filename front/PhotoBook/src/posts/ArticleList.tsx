@@ -1,11 +1,5 @@
 import React, {useEffect} from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
 import {
   fetchAllArticles,
