@@ -1,3 +1,4 @@
+import {authFetch} from './fetch';
 import {Article} from './redux/slices/articles.slice';
 export const domain = 'http://10.0.2.2:3000';
 export const apiUrl = `${domain}/api`;
@@ -7,16 +8,13 @@ export class Api {
     const url = apiUrl + '/articles';
     console.log('url: ', url);
 
-    const response = await fetch(url, {
+    const response = await authFetch(url, {
       method: 'POST',
       body: JSON.stringify(article),
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    if (response.status >= 400) {
-      throw new Error('cannot add an article. Error ' + response.status);
-    }
     return await response.json();
   }
 
