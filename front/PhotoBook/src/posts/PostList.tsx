@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   fetchAllArticles,
@@ -21,9 +21,11 @@ const PostList = () => {
 
   return (
     <View style={styles.view}>
-      <Text style={styles.text}>{articleStatus}</Text>
-
-      <Text style={styles.text}>{articles.length} articles found!</Text>
+      {articleStatus === 'loading' ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <Text style={styles.text}>{articles.length} articles found!</Text>
+      )}
     </View>
   );
 };
