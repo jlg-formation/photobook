@@ -29,6 +29,7 @@ app.post("/disconnect", (req, res) => {
 export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
   if (req.session.user === undefined) {
     res.status(401).end();
+    return;
   }
   next();
 };
