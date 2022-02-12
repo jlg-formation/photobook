@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, RefreshControl, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {domain} from '../api';
-import NewPost from '../posts/NewPost';
+import NewArticle from '../posts/NewArticle';
 import ArticleList from '../posts/ArticleList';
 import {
   fetchAllArticles,
@@ -27,7 +27,7 @@ const Wall = () => {
         source={{uri: `${domain}/images/user-background.jpg`}}
         style={styles.userBackground}
       />
-      <NewPost />
+      <NewArticle />
       <ArticleList />
     </ScrollView>
   );

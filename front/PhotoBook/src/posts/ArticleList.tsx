@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useAppDispatch, useAppSelector} from '../redux/hooks';
 import {
   fetchAllArticles,
   selectAllArticles,
@@ -8,10 +8,10 @@ import {
 } from '../redux/slices/articles.slice';
 
 const ArticleList = () => {
-  const dispatch = useDispatch();
-  const articles = useSelector(selectAllArticles);
+  const dispatch = useAppDispatch();
+  const articles = useAppSelector(selectAllArticles);
 
-  const articleStatus = useSelector(selectArticleStatus);
+  const articleStatus = useAppSelector(selectArticleStatus);
 
   useEffect(() => {
     if (articleStatus === 'idle') {

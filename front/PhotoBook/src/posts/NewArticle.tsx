@@ -1,11 +1,27 @@
 import React, {useState} from 'react';
-import {Button, StyleSheet, TextInput, View} from 'react-native';
-import {useAppSelector} from '../redux/hooks';
+import {StyleSheet, TextInput, View} from 'react-native';
+import {Button} from 'react-native-elements';
+import {useAppDispatch, useAppSelector} from '../redux/hooks';
+import {addNewArticle} from '../redux/slices/articles.slice';
 import {selectAuthentication} from '../redux/slices/authentication.slice';
 
-const NewPost = () => {
+const NewArticle = () => {
   const authentication = useAppSelector(selectAuthentication);
-  const [text, onChangeText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [text, setText] = useState('');
+  const dispatch = useAppDispatch();
+
+  const onSubmit = async () => {
+    try {
+      setIsLoading(true);
+      await dispatch(addNewArticle({content: text, images: []})).unwrap();
+      setText('');
+    } catch (err) {
+      console.log('err: ', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <View style={styles.view}>
@@ -13,11 +29,11 @@ const NewPost = () => {
         multiline
         numberOfLines={5}
         style={styles.input}
-        onChangeText={onChangeText}
+        onChangeText={setText}
         value={text}
         placeholder={`Hello ${authentication.user?.displayName}, what's on your mind?`}
       />
-      <Button title="Post" />
+      <Button title="Post" loading={isLoading} onPress={onSubmit} />
     </View>
   );
 };
@@ -42,4 +58,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NewPost;
+export default NewArticle;

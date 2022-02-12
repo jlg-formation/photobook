@@ -1,7 +1,22 @@
+import {Article} from './redux/slices/articles.slice';
 export const domain = 'http://10.0.2.2:3000';
 export const apiUrl = `${domain}/api`;
 
 export class Api {
+  async addNewArticle(article: Article) {
+    const url = apiUrl + '/articles';
+    console.log('url: ', url);
+
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(article),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return await response.json();
+  }
+
   async connect(email: string, password: string) {
     return await fetch(apiUrl + '/auth/connect', {
       method: 'POST',

@@ -32,16 +32,7 @@ export const articleSlice = createSlice<
 >({
   name: 'articles',
   initialState,
-  reducers: {
-    articleAdded: {
-      prepare(content: string, images: string[]) {
-        return {payload: {content, images}};
-      },
-      reducer(state, action) {
-        state.items.push(action.payload);
-      },
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(fetchAllArticles.pending, state => {
@@ -56,10 +47,13 @@ export const articleSlice = createSlice<
         state.status = 'failed';
         state.error = action.error.message;
       });
+    builder.addCase(addNewArticle.fulfilled, (state, action) => {
+      console.log('addNewArticle fulfilled. action: ', action);
+      // We can directly add the new post object to our posts array
+      state.items.push(action.payload);
+    });
   },
 });
-
-export const {articleAdded} = articleSlice.actions;
 
 export const selectAllArticles = (state: RootState) => state.articles.items;
 export const selectArticleStatus = (state: RootState) => state.articles.status;
@@ -69,5 +63,16 @@ export const fetchAllArticles = createAsyncThunk(
   async () => {
     const data = await api.getArticles();
     return data as Article[];
+  },
+);
+
+export const addNewArticle = createAsyncThunk(
+  'articles/new',
+  // The payload creator receives the partial `{title, content, user}` object
+  async (article: Omit<Article, 'id'>) => {
+    console.log('article to be added: ', article);
+    // We send the initial data to the fake API server
+    const response = await api.addNewArticle(article as Article);
+    return response;
   },
 );
