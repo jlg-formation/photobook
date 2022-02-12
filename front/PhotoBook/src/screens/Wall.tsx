@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Image, StyleSheet, ScrollView, RefreshControl} from 'react-native';
+import React from 'react';
+import {Image, RefreshControl, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {domain} from '../api';
 import NewPost from '../posts/NewPost';
