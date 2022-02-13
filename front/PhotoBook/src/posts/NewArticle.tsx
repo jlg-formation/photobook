@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
-import {addNewArticle} from '../redux/slices/articles.slice';
+import {addNewArticle, fetchAllArticles} from '../redux/slices/articles.slice';
 import {selectAuthentication} from '../redux/slices/authentication.slice';
 
 const NewArticle = () => {
@@ -16,6 +16,7 @@ const NewArticle = () => {
       setIsLoading(true);
       await dispatch(addNewArticle({content: text, images: []})).unwrap();
       setText('');
+      dispatch(fetchAllArticles());
       setIsLoading(false);
     } catch (err) {
       console.log('err: ', err);
@@ -31,6 +32,7 @@ const NewArticle = () => {
         onChangeText={setText}
         value={text}
         placeholder={`Hello ${authentication.user?.displayName}, what's on your mind?`}
+        placeholderTextColor="#000"
       />
       <Button title="Post" loading={isLoading} onPress={onSubmit} />
     </View>

@@ -50,7 +50,6 @@ export const articleSlice = createSlice<
       .addCase(addNewArticle.fulfilled, (state, action) => {
         console.log('addNewArticle fulfilled. action: ', action);
         // We can directly add the new post object to our posts array
-        state.items.push(action.payload);
       })
       .addCase(addNewArticle.rejected, (state, action) => {
         console.log('addNewArticle rejected. action: ', action);
@@ -65,8 +64,13 @@ export const selectArticleStatus = (state: RootState) => state.articles.status;
 export const fetchAllArticles = createAsyncThunk(
   'articles/fetchAll',
   async () => {
-    const data = await api.getArticles();
-    return data as Article[];
+    const articles: Article[] = (await api.getArticles()) as Article[];
+    articles.sort((a, b) => {
+      const aCreated = +a.id.split('_')[0];
+      const bCreated = +b.id.split('_')[0];
+      return Math.sign(bCreated - aCreated);
+    });
+    return articles as Article[];
   },
 );
 
