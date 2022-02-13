@@ -21,9 +21,8 @@ const ArticleList = () => {
 
   return (
     <View style={styles.view}>
-      {articleStatus === 'loading' ? (
-        <ActivityIndicator size="large" />
-      ) : articles.length === 0 ? (
+      {articleStatus === 'loading' && <ActivityIndicator size="large" />}
+      {articles.length === 0 ? (
         <Text style={styles.text}>No article found...</Text>
       ) : (
         articles.map(article => (
