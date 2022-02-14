@@ -21,6 +21,7 @@ const NewArticle = () => {
       await dispatch(addNewArticle({content: text, images: images})).unwrap();
       setIsLoading(false);
       setText('');
+      setImages([]);
       dispatch(fetchAllArticles());
     } catch (err) {
       setIsLoading(false);
