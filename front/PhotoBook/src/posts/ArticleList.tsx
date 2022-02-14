@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
 import {
   fetchAllArticles,
@@ -28,6 +28,17 @@ const ArticleList = () => {
         articles.map(article => (
           <View style={styles.article} key={article.id}>
             <Text style={styles.text}>{article.content}</Text>
+            <View style={styles.imageView}>
+              {article.images.map(imageUri => (
+                <Image
+                  key={imageUri}
+                  style={styles.image}
+                  source={{
+                    uri: imageUri,
+                  }}
+                />
+              ))}
+            </View>
           </View>
         ))
       )}
@@ -54,6 +65,17 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   item: {},
+  imageView: {
+    flex: 1,
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    width: '100%',
+  },
+  image: {
+    height: 200,
+    resizeMode: 'cover',
+  },
 });
 
 export default ArticleList;
