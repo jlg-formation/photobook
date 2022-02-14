@@ -42,6 +42,16 @@ export class Api {
   async isConnected() {
     return await fetch(apiUrl + '/auth/isConnected');
   }
+
+  async upload(formData: FormData) {
+    return await fetch(apiUrl + '/upload', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
+    });
+  }
 }
 
 export const api = new Api();

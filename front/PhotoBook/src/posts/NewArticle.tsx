@@ -4,6 +4,8 @@ import {Button} from 'react-native-elements';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
 import {addNewArticle, fetchAllArticles} from '../redux/slices/articles.slice';
 import {selectAuthentication} from '../redux/slices/authentication.slice';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {api} from '../api';
 
 const NewArticle = () => {
   const authentication = useAppSelector(selectAuthentication);
@@ -24,8 +26,27 @@ const NewArticle = () => {
     }
   };
 
-  const addPhotos = () => {
+  const addPhotos = async () => {
     console.log('adding photos');
+    const result = await launchImageLibrary({
+      mediaType: 'photo',
+    });
+    console.log('result: ', result);
+    if (result.assets === undefined) {
+      return;
+    }
+
+    for (const asset of result.assets) {
+      // for the time being support only jpg
+      const formData = new FormData();
+      formData.append('file', {
+        uri: asset.uri,
+        name: 'image.jpg',
+        type: asset.type,
+      });
+      const response = await api.upload(formData);
+      console.log('response: ', response);
+    }
   };
 
   return (

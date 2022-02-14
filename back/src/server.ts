@@ -4,6 +4,7 @@ import morgan from "morgan";
 import { crudity } from "crudity";
 import { createServer } from "http";
 import { auth, checkAuth } from "./auth";
+import { upload } from "./upload/upload.router";
 
 declare module "express-session" {
   interface SessionData {
@@ -35,6 +36,7 @@ app.use("/api", (req, res, next) => {
   }, 2000);
 });
 app.use("/api/auth", auth);
+app.use("/api/upload", checkAuth, upload);
 
 app.use(
   "/api/articles",
