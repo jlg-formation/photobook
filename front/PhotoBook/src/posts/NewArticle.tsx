@@ -74,12 +74,15 @@ const NewArticle = () => {
       />
       <Text>coucou</Text>
       <View style={styles.imageView}>
-        <Image
-          style={styles.image}
-          source={{
-            uri: `${domain}/images/user-background.jpg`,
-          }}
-        />
+        {images.map(imageUri => (
+          <Image
+            key={imageUri}
+            style={styles.image}
+            source={{
+              uri: imageUri,
+            }}
+          />
+        ))}
       </View>
 
       <View style={styles.command}>
