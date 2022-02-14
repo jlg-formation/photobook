@@ -1,17 +1,15 @@
 import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, View} from 'react-native';
 import {api} from '../api';
 import {ScreenProps} from '../navigation';
 import {useAppDispatch} from '../redux/hooks';
 import {disconnect} from '../redux/slices/authentication.slice';
 
-const Settings = ({navigation}: ScreenProps<'Settings'>) => {
+const Settings = ({navigation}: ScreenProps<'Home'>) => {
   const dispatch = useAppDispatch();
 
-  const name = 'Settings';
   return (
     <View style={styles.view}>
-      <Text style={styles.text}>{name} works !</Text>
       <Button
         title="Disconnect"
         onPress={() => {
