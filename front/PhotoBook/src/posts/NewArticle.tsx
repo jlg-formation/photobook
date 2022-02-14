@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
 import {Button} from 'react-native-elements';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {api, apiUrl} from '../api';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
 import {addNewArticle, fetchAllArticles} from '../redux/slices/articles.slice';
 import {selectAuthentication} from '../redux/slices/authentication.slice';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {api, apiUrl} from '../api';
 
 const NewArticle = () => {
   const authentication = useAppSelector(selectAuthentication);
