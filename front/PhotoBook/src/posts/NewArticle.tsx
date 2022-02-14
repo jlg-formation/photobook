@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {Button} from 'react-native-elements';
+import {Image} from 'react-native-elements/dist/image/Image';
 import {launchImageLibrary} from 'react-native-image-picker';
-import {api, apiUrl} from '../api';
+import {api, apiUrl, domain} from '../api';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
 import {addNewArticle, fetchAllArticles} from '../redux/slices/articles.slice';
 import {selectAuthentication} from '../redux/slices/authentication.slice';
@@ -71,6 +72,16 @@ const NewArticle = () => {
         placeholder={`Hello ${authentication.user?.displayName}, what's on your mind?`}
         placeholderTextColor="#000"
       />
+      <Text>coucou</Text>
+      <View style={styles.imageView}>
+        <Image
+          style={styles.image}
+          source={{
+            uri: `${domain}/images/user-background.jpg`,
+          }}
+        />
+      </View>
+
       <View style={styles.command}>
         <Button
           buttonStyle={[styles.commandButtons, styles.photoButton]}
@@ -122,6 +133,18 @@ const styles = StyleSheet.create({
   },
   photoButton: {
     backgroundColor: 'hsl(0, 0%, 80%)',
+  },
+  imageView: {
+    flex: 1,
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    width: '95%',
+    margin: 10,
+  },
+  image: {
+    height: 200,
+    resizeMode: 'cover',
   },
 });
 
