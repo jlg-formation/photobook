@@ -5,18 +5,19 @@ import {useAppDispatch, useAppSelector} from '../redux/hooks';
 import {addNewArticle, fetchAllArticles} from '../redux/slices/articles.slice';
 import {selectAuthentication} from '../redux/slices/authentication.slice';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {api} from '../api';
+import {api, apiUrl} from '../api';
 
 const NewArticle = () => {
   const authentication = useAppSelector(selectAuthentication);
   const [isLoading, setIsLoading] = useState(false);
   const [text, setText] = useState('');
+  const [images, setImages] = useState([] as string[]);
   const dispatch = useAppDispatch();
 
   const onSubmit = async () => {
     try {
       setIsLoading(true);
-      await dispatch(addNewArticle({content: text, images: []})).unwrap();
+      await dispatch(addNewArticle({content: text, images: images})).unwrap();
       setIsLoading(false);
       setText('');
       dispatch(fetchAllArticles());
@@ -37,15 +38,25 @@ const NewArticle = () => {
     }
 
     for (const asset of result.assets) {
-      // for the time being support only jpg
-      const formData = new FormData();
-      formData.append('file', {
-        uri: asset.uri,
-        name: 'image.jpg',
-        type: asset.type,
-      });
-      const response = await api.upload(formData);
-      console.log('response: ', response);
+      try {
+        // for the time being support only jpg
+        const imageName =
+          Date.now() + '_' + Math.floor(1e6 * Math.random()) + '.jpg';
+        console.log('imageName: ', imageName);
+        const formData = new FormData();
+        formData.append('file', {
+          uri: asset.uri,
+          name: imageName,
+          type: asset.type,
+        });
+        const response = await api.upload(formData);
+        console.log('response: ', response);
+        const imageUri = apiUrl + '/upload/' + imageName;
+        console.log('imageUri: ', imageUri);
+        setImages([...images, imageUri]);
+      } catch (err) {
+        console.log('err: ', err);
+      }
     }
   };
 

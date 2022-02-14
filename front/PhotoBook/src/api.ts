@@ -44,7 +44,7 @@ export class Api {
   }
 
   async upload(formData: FormData) {
-    return await fetch(apiUrl + '/upload', {
+    return await authFetch(apiUrl + '/upload', {
       method: 'POST',
       headers: {
         'Content-Type': 'multipart/form-data',
